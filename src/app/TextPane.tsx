@@ -1,6 +1,13 @@
 import CodeMirror, { Editor } from 'codemirror';
 import 'codemirror/addon/display/placeholder';
-import { FormEvent, useEffect, useId, useRef, useState, WheelEvent } from 'react';
+import {
+  FormEvent,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  WheelEvent,
+} from 'react';
 import '../../node_modules/codemirror/lib/codemirror.css';
 import { isPreRender } from '../prerendering';
 import { ReactComponent as CopyIcon } from './assets/icon-copy.svg';
@@ -38,6 +45,7 @@ export function TextPane({
   className ??= '';
 
   const textAreaId = useId();
+  const labelId = useId();
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [codeMirror, setCodeMirror] = useState<Editor | null>(null);
 
@@ -61,7 +69,11 @@ export function TextPane({
         lineNumbers: false,
         placeholder: 'Paste ANSI-polluted text here',
       });
-      setCodeMirror(codeMirror);
+
+      // Tweak the accessibility attributes a bit
+      const inputField = codeMirror.getInputField();
+      inputField.id = textAreaId;
+      inputField.setAttribute('aria-labelledby', labelId);
 
       if (setValue != null) {
         codeMirror.on('change', (editor) => {
@@ -74,8 +86,18 @@ export function TextPane({
           onScroll(scrollInfo.left, scrollInfo.top);
         });
       }
+
+      setCodeMirror(codeMirror);
     }
-  }, [autoFocus, highlightAnsi, onScroll, setValue, textAreaRef]);
+  }, [
+    autoFocus,
+    highlightAnsi,
+    labelId,
+    onScroll,
+    setValue,
+    textAreaId,
+    textAreaRef,
+  ]);
 
   let headerButtons;
   if (supportsCopy) {
@@ -118,13 +140,14 @@ export function TextPane({
   return (
     <div className={`${className} ${styles.container}`}>
       <div className={styles.header}>
-        <label className={styles.headerLabel} htmlFor={textAreaId}>{label}</label>
+        <label id={labelId} className={styles.headerLabel} htmlFor={textAreaId}>
+          {label}
+        </label>
         <span className={styles.headerStat}>{stat}</span>
         {headerButtons}
       </div>
       <div className={`${styles.textAreaContainer} ${readOnlyStyle}`}>
         <textarea
-          id={textAreaId}
           className={styles.textArea}
           autoFocus={autoFocus}
           readOnly={setValue == null}
