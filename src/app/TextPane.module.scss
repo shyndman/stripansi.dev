@@ -21,7 +21,10 @@
 
 .headerLabel {
   flex: 1;
-  height: min-content;
+  align-self: stretch;
+
+  display: flex;
+  align-items: center;
   margin-left: 12px;
 
   color: rgba(15, 18, 23, 0.87);
