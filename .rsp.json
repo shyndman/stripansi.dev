@@ -1,6 +1,6 @@
 {
   "routes": ["/"],
-  "outFileSuffix": ".pre",
+  "buildDirectory": "build.pre",
   "engine": {
     "launchOptions": {
       "dumpio": true

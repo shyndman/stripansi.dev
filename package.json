@@ -25,7 +25,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "postbuild": "react-spa-prerender",
+    "postbuild": "rm -Rf ./build.pre && cp -R ./build ./build.pre && react-spa-prerender",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
