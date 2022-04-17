@@ -1,6 +1,6 @@
 import CodeMirror, { Editor } from 'codemirror';
 import 'codemirror/addon/display/placeholder';
-import { FormEvent, useEffect, useRef, useState, WheelEvent } from 'react';
+import { FormEvent, useEffect, useId, useRef, useState, WheelEvent } from 'react';
 import '../../node_modules/codemirror/lib/codemirror.css';
 import { isPreRender } from '../prerendering';
 import { ReactComponent as CopyIcon } from './assets/icon-copy.svg';
@@ -37,6 +37,7 @@ export function TextPane({
 }: TextPaneProps) {
   className ??= '';
 
+  const textAreaId = useId();
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [codeMirror, setCodeMirror] = useState<Editor | null>(null);
 
@@ -117,20 +118,21 @@ export function TextPane({
   return (
     <div className={`${className} ${styles.container}`}>
       <div className={styles.header}>
-        <span className={styles.headerLabel}>{label}</span>
+        <label className={styles.headerLabel} htmlFor={textAreaId}>{label}</label>
         <span className={styles.headerStat}>{stat}</span>
         {headerButtons}
       </div>
       <div className={`${styles.textAreaContainer} ${readOnlyStyle}`}>
         <textarea
+          id={textAreaId}
           className={styles.textArea}
+          autoFocus={autoFocus}
+          readOnly={setValue == null}
           value={value}
+          wrap="off"
           onInput={onInput}
           onWheel={onWheel}
-          readOnly={setValue == null}
-          autoFocus={autoFocus}
           ref={textAreaRef}
-          wrap="off"
         ></textarea>
       </div>
     </div>
