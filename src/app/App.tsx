@@ -3,6 +3,7 @@
 import ansiRegex from 'ansi-regex';
 import React, { useEffect, useState } from 'react';
 import styles from './App.module.scss';
+import { Footer } from './Footer';
 import { Header } from './Header';
 import { TextPane } from './TextPane';
 import { timeBlock } from './util';
@@ -47,7 +48,7 @@ function App() {
   return (
     <div className={styles.app}>
       <Header />
-      <div className={styles.textContainer}>
+      <main className={styles.textContainer}>
         <TextPane
           label="Input"
           stat={formatCountStat(escapeCount, elapsedMs)}
@@ -67,7 +68,8 @@ function App() {
           scrollSpec={scrollSpec}
           onScroll={(l, t) => setScrollSpec(`${l},${t}`)}
         />
-      </div>
+      </main>
+      <Footer />
     </div>
   );
 }
