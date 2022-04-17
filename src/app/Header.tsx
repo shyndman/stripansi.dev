@@ -14,7 +14,7 @@ export function Header() {
         <a href="https://en.wikipedia.org/wiki/ANSI_escape_code" target="wiki">
           ANSI escape sequences
         </a>
-        &nbsp;from text, without it leaving your browser 🔒
+        &nbsp;from text, entirely locally 🚫🕵️
       </h2>
     </header>
   );
