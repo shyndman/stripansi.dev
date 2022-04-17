@@ -44,8 +44,7 @@ export function TextPane({
 }: TextPaneProps) {
   className ??= '';
 
-  const textAreaId = useId();
-  const labelId = useId();
+  const baseId = useId();
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [codeMirror, setCodeMirror] = useState<Editor | null>(null);
 
@@ -72,8 +71,8 @@ export function TextPane({
 
       // Tweak the accessibility attributes a bit
       const inputField = codeMirror.getInputField();
-      inputField.id = textAreaId;
-      inputField.setAttribute('aria-labelledby', labelId);
+      inputField.id = `${baseId}-input`;
+      inputField.setAttribute('aria-labelledby', `${baseId}-label`);
 
       if (setValue != null) {
         codeMirror.on('change', (editor) => {
@@ -89,15 +88,7 @@ export function TextPane({
 
       setCodeMirror(codeMirror);
     }
-  }, [
-    autoFocus,
-    highlightAnsi,
-    labelId,
-    onScroll,
-    setValue,
-    textAreaId,
-    textAreaRef,
-  ]);
+  }, [autoFocus, highlightAnsi, baseId, onScroll, setValue, textAreaRef]);
 
   let headerButtons;
   if (supportsCopy) {
@@ -140,7 +131,7 @@ export function TextPane({
   return (
     <div className={`${className} ${styles.container}`}>
       <div className={styles.header}>
-        <label id={labelId} className={styles.headerLabel} htmlFor={textAreaId}>
+        <label id={`${baseId}-label`} className={styles.headerLabel} htmlFor={`${baseId}-input`}>
           {label}
         </label>
         <span className={styles.headerStat}>{stat}</span>
