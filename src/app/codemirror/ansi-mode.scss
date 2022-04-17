@@ -1,0 +1,55 @@
+@use "../code";
+
+.cm-s-stripansi {
+  @extend %source-code;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  height: 100%;
+  background: transparent;
+
+  &.CodeMirror-focused {
+    outline: -webkit-focus-ring-color auto 1px;
+  }
+
+  // Allow scrollbars to hide by ensuring pointer-events never gets set to none
+  .CodeMirror-vscrollbar,
+  .CodeMirror-hscrollbar {
+    pointer-events: auto !important;
+  }
+
+  // Adjust the positioning of the bars so they appear more like native
+  .CodeMirror-vscrollbar {
+    margin-bottom: 8px;
+  }
+  .CodeMirror-hscrollbar {
+    margin-right: 8px;
+  }
+
+  // Aligns with the output textarea
+  .CodeMirror-lines {
+    padding: 8px 0 0 8px;
+  }
+
+  pre.CodeMirror-line,
+  pre.CodeMirror-line-like {
+    padding: 0;
+  }
+
+  .CodeMirror-placeholder {
+    opacity: 0.6;
+  }
+}
+
+// Tokens
+.cm-ansi,
+.cm-invalidchar {
+  color: #ef5350;
+}
+.cm-ansi {
+  font-weight: 600;
+}

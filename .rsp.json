@@ -1,0 +1,13 @@
+{
+  "routes": ["/"],
+  "outFileSuffix": ".pre",
+  "engine": {
+    "launchOptions": {
+      "dumpio": true
+    },
+    "gotoOptions": {
+      "referer": "https://puppeteer.io",
+      "userAgent": "puppeteer!"
+    }
+  }
+}
